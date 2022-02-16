@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1> This is the Employee data display page</h1>
+
+<a href="{% url 'addemployee' %}">Add New Employee data</a>
+<br>
+{% for d in data %}
+    {{d.employee_id}} -- {{d.employee_name}} <br>
+{% endfor %}
+
+{% endblock content %}
