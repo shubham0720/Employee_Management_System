@@ -1,3 +1,4 @@
+from cmath import log
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -53,3 +54,27 @@ def addNewEmployee(request):
             return redirect('employeedisplay')
     context = {'form':form}
     return render(request, 'baseapp/addeditEmployee.html', context)
+
+@login_required(login_url='login')
+def editEmployee(request, pk):
+    data = EmployeeDataManager.objects.get(employee_id=pk)
+    form = EmployeeDataManagerForm(instance=data)
+
+    if request.method == "POST":
+        form = EmployeeDataManagerForm(request.POST, instance=data)
+        if form.is_valid():
+            form.save()
+            return redirect('employeedisplay')
+
+    context = {'form':form}
+    return render(request, 'baseapp/addeditEmployee.html', context)
+
+@login_required(login_url='login')
+def deleteEmployee(request, pk):
+    data = EmployeeDataManager.objects.get(employee_id=pk)
+    if request.method == "POST":
+        data.delete()
+        return redirect('employeedisplay')
+
+    context = {'id':data.employee_name}
+    return render(request, 'baseapp/deleteEmployee.html', context)

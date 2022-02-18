@@ -7,7 +7,7 @@
 <a href="{% url 'addemployee' %}">Add New Employee data</a>
 <br>
 {% for d in data %}
-    {{d.employee_id}} -- {{d.employee_name}} <br>
+    {{d.employee_id}} -- {{d.employee_name}} -- <a href="{% url 'editemployee' d.employee_id %}">Edit Details</a> -- <a href="{% url 'deleteemployee' d.employee_id %}">Delete Employee Record</a><br>
 {% endfor %}
 
 {% endblock content %}
