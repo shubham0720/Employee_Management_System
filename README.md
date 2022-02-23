@@ -6,8 +6,6 @@ Actions Completed:
 - CRUD Operations of Employee details
 
 Plan of Action:
-- CRUD Operations of Employee details
-- Commit till this version of Project
 - Make EM advanced, include projects of the firm, details etc
 - Work on frontend 
 - Learn Docker, Hosting, Deployment etc
