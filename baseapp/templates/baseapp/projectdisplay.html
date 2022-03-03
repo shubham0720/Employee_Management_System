@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1> Project list display </h1>
+
+<a href="{% url 'addproject' %}">Add New Project</a><br><br>
+
+{% for project in projects %}
+<a href="">{{project}}</a> -- <a href="{% url 'editproject' project.project_id%}"> Edit Project Details </a> -- <a href="{% url 'deleteproject' project.project_id %}"> Delete Project </a><br>
+{% endfor %}
+
+{% endblock content %}

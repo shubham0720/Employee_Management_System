@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import EmployeeDataManager
-from .forms import EmployeeDataManagerForm
+from .models import EmployeeDataManager, Projects, ManagerData
+from .forms import EmployeeDataManagerForm, ProjectsForm
 
 # Create your views here.
 
@@ -76,4 +76,45 @@ def deleteEmployee(request, pk):
         return redirect('employeedisplay')
 
     context = {'id':data.employee_name}
+    return render(request, 'baseapp/deleteEmployee.html', context)
+
+@login_required(login_url='login')
+def projectsDisplay(request):
+    projects = Projects.objects.all()
+    context = {'projects':projects}
+    return render(request, 'baseapp/projectdisplay.html', context)
+
+@login_required(login_url='login')
+def addNewProject(request):
+    form = ProjectsForm()
+    if request.method == "POST":
+        form = ProjectsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('projectdisplay')
+    context = {'form':form}
+    return render(request, 'baseapp/addeditProject.html', context)
+
+@login_required(login_url='login')
+def editProject(request, pk):
+    data = Projects.objects.get(project_id=pk)
+    form = ProjectsForm(instance=data)
+
+    if request.method == "POST":
+        form = ProjectsForm(request.POST, instance=data)
+        if form.is_valid():
+            form.save()
+            return redirect('projectdisplay')
+
+    context = {'form':form}
+    return render(request, 'baseapp/addeditProject.html', context)
+
+@login_required(login_url='login')
+def deleteProject(request, pk):
+    data = Projects.objects.get(project_id=pk)
+    if request.method == "POST":
+        data.delete()
+        return redirect('projectdisplay')
+
+    context = {'id':data.project_name}
     return render(request, 'baseapp/deleteEmployee.html', context)
