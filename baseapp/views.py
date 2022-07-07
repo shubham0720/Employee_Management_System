@@ -49,6 +49,9 @@ def addNewEmployee(request):
     if request.method == "POST":
         form = EmployeeDataManagerForm(request.POST)
         if form.is_valid():
+            isManager = form.cleaned_data.get('isManager')
+            if isManager:
+                print(True)
             form.save()
             return redirect('employeedisplay')
     context = {'form':form}
